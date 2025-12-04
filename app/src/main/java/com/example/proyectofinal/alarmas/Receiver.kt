@@ -6,9 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Icon
 import android.util.Log
-import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import com.example.proyectofinal.MainActivity
 import com.example.proyectofinal.R
@@ -22,16 +20,22 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val message = intent.getStringExtra("EXTRA_MESSAGE") ?: "Sin mensaje"
         val idAlarma = intent.getStringExtra("EXTRA_ALARM_ID") ?: "Desconocido"
-        Log.d("AlarmReceiver", "Alarma recibida: $message, ID: $idAlarma")
+
+        val taskId = intent.getStringExtra("EXTRA_TASK_ID") ?: ""
+
+        Log.d("AlarmReceiver", "Alarma recibida: $message, ID alarma: $idAlarma, taskId: $taskId")
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val notificationIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra("TASK_ID", taskId)
         }
+
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            idAlarma.hashCode(),
             notificationIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -40,12 +44,12 @@ class AlarmReceiver : BroadcastReceiver() {
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.itsur_notes))
             .setSmallIcon(R.drawable.noti)
             .setContentTitle(context.getString(R.string.alarma))
-            .setContentText(message+" "+context.getString(R.string.mensaje_tarea))
+            .setContentText("$message ${context.getString(R.string.mensaje_tarea)}")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
             .build()
 
-        val notificationId = idAlarma.hashCode()// Identificador único para la notificación
-        notificationManager.notify(notificationId, notification)
+        notificationManager.notify(idAlarma.hashCode(), notification)
     }
 }

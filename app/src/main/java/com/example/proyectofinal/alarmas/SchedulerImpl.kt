@@ -19,6 +19,8 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("EXTRA_MESSAGE", alarmItem.message)
             putExtra("EXTRA_ALARM_ID", alarmItem.idAlarma)
+
+            putExtra("EXTRA_TASK_ID", alarmItem.taskId)
         }
 
         val uniqueRequestCode = alarmItem.idAlarma.hashCode()
@@ -53,6 +55,7 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
     }
 
 
+
     override fun cancel(alarmItem: AlarmItem) {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("EXTRA_MESSAGE", alarmItem.message)
@@ -78,4 +81,5 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
         Log.d("AlarmScheduler", "Alarma editada para: ${newAlarmTime}")
     }
 
+    
 }

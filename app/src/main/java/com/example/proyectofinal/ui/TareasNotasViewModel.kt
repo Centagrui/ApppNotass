@@ -150,11 +150,11 @@ class TareasNotasViewModel(
         fechaCreacion: LocalDateTime,
         descripcion: String,
         imagenes: List<Uri>,
-        recordatorios: List<AlarmItem> // Cambiado a AlarmItem
+        recordatorios: List<AlarmItem>
     ) {
         viewModelScope.launch {
+
             val multimediaJson = convertUrisToJson(imagenes)
-            val recordatoriosJson = convertAlarmItemsToJson(recordatorios) // Serializa AlarmItems
 
             val tarea = Tarea(
                 titulo = titulo,
@@ -162,9 +162,25 @@ class TareasNotasViewModel(
                 fechaCreacion = fechaCreacion.toString(),
                 descripcion = descripcion,
                 multimedia = multimediaJson,
-                recordatorios = recordatoriosJson // Guardar como JSON
+                recordatorios = "" // se actualizará abajo
             )
-            tareaRepository.insertTarea(tarea)
+
+            val recordatoriosConId = recordatorios.map { alarm ->
+                alarm.copy(taskId = tarea.id)
+            }
+
+            val recordatoriosJson = convertAlarmItemsToJson(recordatoriosConId)
+
+            val tareaFinal = tarea.copy(
+                recordatorios = recordatoriosJson
+            )
+
+            tareaRepository.insertTarea(tareaFinal)
+
+            recordatoriosConId.forEach { alarm ->
+                alarmScheduler.schedule(alarm)
+            }
+
             actualizarTareas()
         }
     }
@@ -266,7 +282,7 @@ class TareasNotasViewModel(
                     else -> tareasVisibles.sortedBy { it.fecha }
                 }
             }
-            1 -> { // Para Notas (tabIndex == 1)
+            1 -> {
                 val notasFiltradas = uiState.notas
                 when (filtro) {
                     stringResource(R.string.titulo) -> notasFiltradas.sortedBy { it.titulo }
@@ -310,14 +326,18 @@ class TareasNotasViewModel(
         return uris
     }
 
-    fun agregarNotificacion(date: LocalDate, time: LocalTime, tittle: String) {
+    fun agregarNotificacion(date: LocalDate, time: LocalTime, taskId: String) {
+
         val alarmItem = AlarmItem(
             idAlarma = "$date-$time-${System.currentTimeMillis()}".hashCode().toString(),
+            taskId = taskId,   // ← ID REAL DE LA TAREA
             alarmTime = LocalDateTime.of(date, time).toString(),
-            message = "$title"
+            message = title
         )
+
         notifications = notifications + alarmItem
     }
+
 
     fun programarNotificacion(alarmItem: AlarmItem) {
         alarmScheduler.schedule(alarmItem)
@@ -352,7 +372,4 @@ class TareasNotasViewModel(
         val type = object : TypeToken<List<AlarmItem>>() {}.type
         return Gson().fromJson(json, type)
     }
-
-
-
 }

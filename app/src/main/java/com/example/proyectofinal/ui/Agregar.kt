@@ -667,7 +667,6 @@ fun ExoPlayerAudioPlayerContent(
         }
     }
 
-    // Obtener el nombre del archivo de audio
     val audioFileName = remember(audioUri) {
         audioUri.lastPathSegment?.split("/")?.lastOrNull() ?: "Audio desconocido"
     }

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TareaDao {
+
     @Query("SELECT * FROM tasks ORDER BY fecha ASC")
     fun getAllTareas(): Flow<List<Tarea>>
 
@@ -12,7 +13,7 @@ interface TareaDao {
     suspend fun getTareaById(id: String): Tarea?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(tarea: Tarea)
+    suspend fun insert(tarea: Tarea): Long  // ← AQUÍ ES LONG
 
     @Update
     suspend fun update(tarea: Tarea)

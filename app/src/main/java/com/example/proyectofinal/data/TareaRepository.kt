@@ -8,4 +8,7 @@ interface TareaRepository {
     suspend fun insertTarea(tarea: Tarea)
     suspend fun updateTarea(tarea: Tarea)
     suspend fun deleteTarea(tarea: Tarea)
+
+    suspend fun insertAndReturnId(tarea: Tarea): Long
+
 }
