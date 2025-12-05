@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import coil3.compose.AsyncImage
 import com.example.proyectofinal.R
-
+// tomar la fto, osea la abre
 
 @Composable
 fun AbrirCamara(onMediaSelected: (Uri) -> Unit) {
@@ -58,7 +58,7 @@ fun AbrirCamara(onMediaSelected: (Uri) -> Unit) {
         )
     }
 }
-
+// para buscar las imagenes que quieres agregar
 @Composable
 fun MultimediaPicker(onMediaSelected: (Uri) -> Unit) {
     val multiplePhoto = rememberLauncherForActivityResult(

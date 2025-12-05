@@ -1,5 +1,6 @@
 package com.example.proyectofinal.ui
-
+//pantalla principal
+import android.app.Activity
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,6 +24,10 @@ import com.example.proyectofinal.R
 import com.example.proyectofinal.data.Nota
 import com.example.proyectofinal.data.Tarea
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
+import com.example.proyectofinal.abrirAjustes
+import com.example.proyectofinal.permisoDenegadoPermanentemente
+import com.example.proyectofinal.permisoYaSolicitado
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,12 +146,14 @@ fun Content(
                 modifier = Modifier.fillMaxWidth().padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                // botón de filtros
                 FilterButton(
                     tabIndex = selectedTabIndex,
                     filtroSeleccionado = filtroSeleccionado,
                     onFilterSelected = onFiltroSeleccionadoChange,
                 )
 
+                // botón ver tareas completadas
                 if (selectedTabIndex == 0) {
                     Button(onClick = { onMostrarCompletadasChange(!mostrarCompletadas) }) {
                         Text(
@@ -157,6 +165,19 @@ fun Content(
                 }
             }
         }
+
+
+        // --- DETECTAR SI EL PERMISO ESTÁ BLOQUEADO PERMANENTEMENTE ---
+        val context = LocalContext.current
+        val activity = context as Activity
+
+        val yaSolicitado = permisoYaSolicitado(context)
+
+        val permisoBloqueado = yaSolicitado && permisoDenegadoPermanentemente(
+            activity,
+            android.Manifest.permission.POST_NOTIFICATIONS
+        )
+
 
         val itemsFiltrados = when (selectedTabIndex) {
             0 -> tareasNotasViewModel.obtenerItemsFiltrados(filtroSeleccionado, 0, mostrarCompletadas)
@@ -172,9 +193,7 @@ fun Content(
                         BoxTarea(
                             tarea = item,
                             onCardClick = {
-
-                                // CORRECCIÓN ⚡ ABRIR POR ID REAL
-                                navController.navigate("itemId/${item.id}")
+                                navController.navigate("itemId/${item.id}") // ABRIR POR ID REAL
                             },
                             onComplete = {
                                 tareasNotasViewModel.completarTarea(item)
@@ -193,8 +212,7 @@ fun Content(
                         BoxNota(
                             nota = item,
                             onCardClick = {
-                                // CORRECCIÓN ⚡ ABRIR POR ID REAL
-                                navController.navigate("itemId/${item.id}")
+                                navController.navigate("itemId/${item.id}") // ABRIR POR ID REAL
                             },
                             onEdit = {
                                 tareasNotasViewModel.procesarNota(item)
@@ -206,6 +224,28 @@ fun Content(
                         )
                     }
                 }
+            }
+        }
+
+        // --- BOTÓN AL FINAL DE LA PANTALLA SOLO SI EL PERMISO ESTÁ DENEGADO PERMANENTEMENTE ---
+        if (permisoBloqueado) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { abrirAjustes(context) },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Abrir Ajustes",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text("Habilitar permisos en Ajustes")
             }
         }
     }

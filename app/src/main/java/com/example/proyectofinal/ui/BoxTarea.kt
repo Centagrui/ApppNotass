@@ -1,5 +1,5 @@
 package com.example.proyectofinal.ui
-
+//lo mismo que box notas pero para tarea
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons

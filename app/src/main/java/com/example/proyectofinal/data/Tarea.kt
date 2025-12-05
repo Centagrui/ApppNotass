@@ -9,7 +9,7 @@ import java.util.UUID
 data class Tarea(
     @PrimaryKey @ColumnInfo(name = "id") val id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "titulo") val titulo: String,
-    @ColumnInfo(name = "fecha") val fecha: String,
+    @ColumnInfo(name = "fecha") val fecha: String, // es la fecha limite
     @ColumnInfo(name = "fecha_creacion") val fechaCreacion: String,
     @ColumnInfo(name = "descripcion") var descripcion: String = "",
     @ColumnInfo(name = "multimedia") val multimedia: String = "",

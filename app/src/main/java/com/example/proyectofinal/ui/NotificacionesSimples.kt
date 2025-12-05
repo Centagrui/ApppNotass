@@ -1,6 +1,6 @@
 package com.example.proyectofinal.ui
 
-
+// es la pantaala de ver notificaciones
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar

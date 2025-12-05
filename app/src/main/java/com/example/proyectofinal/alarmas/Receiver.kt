@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.proyectofinal.MainActivity
 import com.example.proyectofinal.R
-
+// es para cuando ya este la alarma y muestra la notificacion
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) {

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Tarea::class, Nota::class], version = 1, exportSchema = false)
 abstract class ProyectoFinalDatabase : RoomDatabase() {
-
+//le damos loa accesos a el dao
     abstract fun tareaDao(): TareaDao
     abstract fun notaDao(): NotaDao
 

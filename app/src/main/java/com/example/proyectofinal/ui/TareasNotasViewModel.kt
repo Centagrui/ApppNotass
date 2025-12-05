@@ -1,5 +1,5 @@
 package com.example.proyectofinal.ui
-
+// es como el back de la aplicacion
 import android.net.Uri
 import android.os.Build
 import android.util.Log

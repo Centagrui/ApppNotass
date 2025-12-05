@@ -14,7 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.proyectofinal.data.Nota
-
+// esta es la que se reutiliza y se muestra en cada nota
+//se usa en la pantalla principal,busqeda y filtros
 @Composable
 fun BoxNota(
     nota: Nota,

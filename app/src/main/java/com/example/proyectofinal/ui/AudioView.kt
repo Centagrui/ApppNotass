@@ -73,7 +73,7 @@ fun startRecordingWithoutPermissions(context: Context) {
     try {
         val audioFile = context.createAudioFile() // Llama a la nueva función
         audioFilePath = audioFile.absolutePath // Obtén la ruta absoluta del archivo
-
+ // va ausar el microfono y va agrabar en mp4 lo prepara el telefoefono y empieza a grabar
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -126,14 +126,16 @@ fun checkAndRequestPermissions(context: Context, onPermissionsGranted: () -> Uni
     }
 }
 
-
+//lista las uris
 @Composable
 fun AudioHandler(
     imagesUris: List<Uri>,
     onImagesChanged: (List<Uri>) -> Unit
 ) {
     val context = LocalContext.current
+    //verifica si se esta grabando o no
     var isRecording by remember { mutableStateOf(false) }
+    //la ruta del audio grabado
     var recordingPath by remember { mutableStateOf<String?>(null) }
 
     // Lanzador para permisos
@@ -169,7 +171,7 @@ fun AudioHandler(
         }
     }
 
-
+// para que el usario vea si se esta grabdo o no , mas que nada es para el usario
     IconButton(
         onClick = toggleRecording,
         modifier = Modifier
@@ -187,7 +189,7 @@ fun AudioHandler(
         )
     }
 }
-
+//el nombre de la grabacion es en milsisgundo para que no se repita y lo guarda en un mp3
 @SuppressLint("SimpleDateFormat")
 fun Context.createAudioFile(): File {
     val timeStamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())

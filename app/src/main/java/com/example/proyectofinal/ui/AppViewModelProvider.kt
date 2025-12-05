@@ -9,7 +9,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.proyectofinal.ProyectoFinalApplication
 import com.example.proyectofinal.alarmas.AlarmScheduler
 import com.example.proyectofinal.alarmas.AlarmSchedulerImpl
-
+// para todo lo que se ocupar las bd ,alamrs, acces
 object AppViewModelProvider {
     @RequiresApi(Build.VERSION_CODES.O)
     val Factory = viewModelFactory {

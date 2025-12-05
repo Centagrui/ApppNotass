@@ -1,5 +1,5 @@
 package com.example.proyectofinal.ui
-
+// es para el filrado
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*

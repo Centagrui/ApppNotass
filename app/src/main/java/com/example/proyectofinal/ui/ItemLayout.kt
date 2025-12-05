@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.example.proyectofinal.ui
-
+// solo muestra lo que tiene ya sea la note o tarea
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap

@@ -79,7 +79,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
 import java.util.TimeZone
-
+// esta es la pantalla para agregar nota o tarea
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -87,7 +87,7 @@ fun Agregar(navController: NavController, viewModel: TareasNotasViewModel) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var isNota by rememberSaveable { mutableStateOf(true) }
-
+//para las notificaciones de que si le das permiso ya te manda las notificaciones y si no pues te fa un avisa que no
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { isGranted ->
@@ -103,7 +103,7 @@ fun Agregar(navController: NavController, viewModel: TareasNotasViewModel) {
         }
     )
 
-
+// aqui checamos que es lo que se esta agregando si es una nota o recordatorio
     var showDatePickerDialog by rememberSaveable { mutableStateOf(false) }
 
     var isButtonEnabled by remember { mutableStateOf(true) }
@@ -138,6 +138,7 @@ fun Agregar(navController: NavController, viewModel: TareasNotasViewModel) {
 
     Scaffold(
         topBar = {
+            //
             TopAppBar(
                 title = { Text(stringResource(R.string.agregar_tarea_nota)) },
                 navigationIcon = {
@@ -185,6 +186,7 @@ fun Agregar(navController: NavController, viewModel: TareasNotasViewModel) {
                 }
             )
         },
+
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 if (isButtonEnabled && !isNavigating) {

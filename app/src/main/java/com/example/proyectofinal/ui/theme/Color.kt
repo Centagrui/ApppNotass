@@ -2,7 +2,6 @@ package com.example.proyectofinal.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Colores de la paleta original ajustados a tonos NUDE/Neutros suaves
 val Purple80 = Color(0xFFF0EAE4) // Beige muy claro, casi crema
 val PurpleGrey80 = Color(0xFFE8DCD5) // Beige suave
 val Pink80 = Color(0xFFF9E8E4) // Melocotón muy pálido

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-
+// es para lo agregar que se reutiliza en als pantallas
 @Composable
 fun BotonFlotante(onClick: () -> Unit) {
     FloatingActionButton(

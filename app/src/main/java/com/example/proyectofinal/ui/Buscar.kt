@@ -75,6 +75,7 @@ fun Buscar(
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
+            // aqui obtiene ya todo filtrado
             val itemsFiltrados = tareasNotasViewModel.obtenerItemsPorText(search)
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()

@@ -1,5 +1,5 @@
 package com.example.proyectofinal.ui
-
+// es para tomar las fotos y ponerlas como multimedia
 import android.content.Context
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat

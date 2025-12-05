@@ -16,14 +16,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+// este se usa cuando se reincia el celular o seaa todo el archiv
 
 class ReceiverBootCompleted : BroadcastReceiver() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
+        // aqui nos fijamos si si se incio bien
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             Log.d("ReceiverBootCompleted", "Reprogramando alarmas después del reinicio")
-
+                // vamos a la bd
             val database = ProyectoFinalDatabase.getDatabase(context)
             val tareaDao = database.tareaDao()
             val alarmScheduler = AlarmSchedulerImpl(context)
@@ -59,6 +61,7 @@ class ReceiverBootCompleted : BroadcastReceiver() {
             }
         }
     }
+    // Convierte el JSON almacenado en la BD en una lista de AlarmItem
 
     private fun convertJsonToAlarmItems(json: String): List<AlarmItem> {
         return Gson().fromJson(json, object : TypeToken<List<AlarmItem>>() {}.type)

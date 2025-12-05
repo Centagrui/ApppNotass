@@ -1,5 +1,6 @@
 package com.example.proyectofinal.ui
-
+//Esta pantalla muestra, agrega, edita y elimina recordatorios
+// (AlarmItem) asociados a una Tarea.
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
